@@ -5,6 +5,10 @@ import aiofiles
 
 app = FastAPI()
 
+@app.get("/")
+async def root():
+    return {"message": "Hello World"}
+
 @app.post("/upload-file")
 async def create_upload_file(file: UploadFile):
     print("filename = ", file.filename) # getting filename
