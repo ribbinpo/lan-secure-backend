@@ -1,16 +1,16 @@
-from Graph import *
+from .Graph import *
 import os
 
-prefixDots = './files/dots/'
-prefixImages = './files/images/'
+prefixDots = 'assets/dots/'
+prefixImages = 'assets/images/'
 
 # Visualize ARP frames
 def visualize(node_dict, req_edge_dict, fileName):
-    stat, dotfile = write_dotfile(node_dict, req_edge_dict, fileName)
-    if stat == ERROR:
+    status, dotfile = write_dotfile(node_dict, req_edge_dict, fileName)
+    if status == ERROR:
         return ERROR, None
-    stat, pngfile = generate_png_file(dotfile, fileName)
-    if stat == ERROR:
+    status, pngfile = generate_png_file(dotfile, fileName)
+    if status == ERROR:
         return ERROR, None
     return OK, pngfile
 

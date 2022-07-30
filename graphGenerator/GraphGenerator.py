@@ -1,9 +1,10 @@
-from Graph import *
+from .Graph import *
 import dpkt
 import socket
 
 # Generate graph: Vertices and Edges
-def construct_graph(pcappath):
+def construct_graph(pcapFile):
+    pcappath = 'assets/pcaps/'+pcapFile+'.pcap'
     # Declare variables
     req_edge_dict = dict()
     rep_edge_dict = dict()

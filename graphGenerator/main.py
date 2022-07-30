@@ -6,7 +6,7 @@ status_map = {0: "OK", 1: "ERROR"}
 
 def main(fileName):
   # fileName = 'a004_20220201_000002'
-  status, V, E = construct_graph('./files/pcaps/'+fileName+'.pcap')
+  status, V, E = construct_graph(fileName)
   # print(status_map[status])
   # print(V)
   # print(E)

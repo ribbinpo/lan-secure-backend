@@ -2,7 +2,7 @@ import uvicorn
 from fastapi import FastAPI, File, UploadFile
 import aiofiles
 # import shutil;
-from routes.api import router as api_router
+from routers import graph
 
 app = FastAPI()
 
@@ -10,7 +10,7 @@ app = FastAPI()
 async def root():
     return {"message": "Hello World"}
 
-app.include_router(api_router)
+app.include_router(graph.router)
 
 # @app.post("/upload-file")
 # async def create_upload_file(file: UploadFile):
