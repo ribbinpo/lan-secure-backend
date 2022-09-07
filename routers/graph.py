@@ -21,7 +21,7 @@ async def create_upload_file(file: UploadFile):
     print("filename = ", file.filename[:-5]) # getting filename
     if not file:
         return { "message": "No upload file sent" }
-    pcapsPath = "assets/pcaps/"+file.filename # location to store file
+    pcapsPath = "../assets/pcaps/"+file.filename # location to store file
     async with aiofiles.open(pcapsPath, 'wb') as out_file:
         while content := await file.read(1024):
             await out_file.write(content)
