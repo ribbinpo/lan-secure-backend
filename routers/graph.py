@@ -17,10 +17,10 @@ async def read_pcap(pcap_name: str):
 
 # upload file pcap
 @router.post("/uploadfile/")
-async def create_upload_file(file: UploadFile):
-    print("filename = ", file.filename[:-5]) # getting filename
+async def create_upload_file(file: UploadFile = File(...)):
     if not file:
         return { "message": "No upload file sent" }
+    print("filename = ", file.filename) # getting filename
     pcapsPath = "assets/pcaps/"+file.filename # location to store file
     async with aiofiles.open(pcapsPath, 'wb') as out_file:
         while content := await file.read(1024):
