@@ -1,8 +1,8 @@
 from .Graph import *
 import os
 
-prefixDots = '../assets/dots/'
-prefixImages = '../ assets/images/'
+prefixDots = 'assets/dots/'
+prefixImages = 'assets/images/'
 
 # Visualize ARP frames
 def visualize(node_dict, req_edge_dict, fileName):
