@@ -20,12 +20,8 @@ async def read_pcap(pcap_name: str):
 async def create_upload_file(file: UploadFile = File(...)):
     if not file:
         return { "message": "No upload file sent" }
-<<<<<<< HEAD
-    pcapsPath = "../assets/pcaps/"+file.filename # location to store file
-=======
     print("filename = ", file.filename) # getting filename
     pcapsPath = "assets/pcaps/"+file.filename # location to store file
->>>>>>> c4618b8b793847dd87d890807df8805ee4742a38
     async with aiofiles.open(pcapsPath, 'wb') as out_file:
         while content := await file.read(1024):
             await out_file.write(content)
