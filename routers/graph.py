@@ -1,7 +1,9 @@
+from tkinter import image_names
 from fastapi import APIRouter, File, UploadFile
 import aiofiles
 from graphGenerator.GraphGenerator import construct_graph
 from graphGenerator.Visualization import visualize
+from fastapi.responses import FileResponse, Response
 
 #APIRouter creates path operations for item module
 router = APIRouter(
@@ -14,6 +16,21 @@ router = APIRouter(
 @router.get('/{pcap_name}')
 async def read_pcap(pcap_name: str):
     return [{ "pcap_name": pcap_name }]
+
+@router.get('/run/{pcap_name}')
+async def running(pcap_name: str):
+    pcapsPath = "assets/pcaps/"+ pcap_name
+    status_graph, node_graph, edge_graph = construct_graph(pcapsPath)
+    status_visual, pngPath = visualize(node_graph, edge_graph, pcapsPath)
+    return {
+        "Graph's status: ": status_graph,
+        "Visual's status": status_visual    
+    }
+
+@router.get('/uploadImage/{image_name}')
+async def downloadImage(image_name: str):
+    pcapsPath = "assets/pcaps/"+ image_name
+    return FileResponse(path=pcapsPath, filename=pcapsPath)
 
 # upload file pcap
 @router.post("/uploadfile/")

@@ -1,10 +1,12 @@
 import uvicorn
 from fastapi import FastAPI, File, UploadFile
+from fastapi.staticfiles import StaticFiles
 import aiofiles
 # import shutil;
 from routers import graph
 
 app = FastAPI()
+app.mount("/assets", StaticFiles(directory="assets"), name="assets")
 
 @app.get("/")
 async def root():
