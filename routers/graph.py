@@ -4,6 +4,7 @@ import aiofiles
 from graphGenerator.GraphGenerator import construct_graph
 from graphGenerator.Visualization import visualize
 from fastapi.responses import FileResponse, Response
+import os
 
 #APIRouter creates path operations for item module
 router = APIRouter(
@@ -11,11 +12,6 @@ router = APIRouter(
     tags=["graph"],
     responses={404: {"description": "Not found"}},
 )
-
-# show dot file, save to png file
-@router.get('/{pcap_name}')
-async def read_pcap(pcap_name: str):
-    return [{ "pcap_name": pcap_name }]
 
 @router.get('/run/{pcap_name}')
 async def running(pcap_name: str):
@@ -46,10 +42,7 @@ async def create_upload_file(file: UploadFile = File(...)):
     # Cut .pcap file name
     status_visual, pngPath = visualize(node_graph, edge_graph, file.filename)
     return { "Result": status_visual }
-
-# @router.get('/')
-# async def read_root():
-#     fileName = 'a004_20220210_000001.pcap'
-#     status_graph, node_graph, edge_graph = construct_graph(fileName)
-#     status_visual, pngPath = visualize(node_graph, edge_graph, fileName)
-#     return { "status": status_visual, "png": pngPath  }
+@router.get("/getname/")
+async def get_file_name():
+    file_list = os.listdir('assets/pcaps')
+    return { "list": file_list }
