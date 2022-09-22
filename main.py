@@ -3,7 +3,7 @@ from fastapi import FastAPI, File, UploadFile
 from fastapi.staticfiles import StaticFiles
 import aiofiles
 # import shutil;
-from routers import graph
+from routers import graph, generateGraph
 
 app = FastAPI()
 app.mount("/assets", StaticFiles(directory="assets"), name="assets")
@@ -13,6 +13,7 @@ async def root():
     return {"message": "Hello World"}
 
 app.include_router(graph.router)
+app.include_router(generateGraph.router)
 
 # @app.post("/upload-file")
 # async def create_upload_file(file: UploadFile):

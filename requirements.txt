@@ -16,7 +16,5 @@ six==1.16.0
 sniffio==1.2.0
 starlette==0.19.1
 typing_extensions==4.3.0
-unicorn==2.0.0
-uvicorn==0.18.2
 watchfiles==0.15.0
 websockets==10.3

@@ -8,7 +8,7 @@ import os
 
 #APIRouter creates path operations for item module
 router = APIRouter(
-    prefix="/connected-graph/v1",
+    prefix="/connected-graph/v2",
     tags=["graph"],
     responses={404: {"description": "Not found"}},
 )
@@ -23,9 +23,9 @@ async def running(pcap_name: str):
         "Visual's status": status_visual    
     }
 
-@router.get('/uploadImage/{image_name}')
-async def downloadImage(image_name: str):
-    pcapsPath = "assets/pcaps/"+ image_name
+@router.get('/download/{file_name}')
+async def downloadImage(file_name: str):
+    pcapsPath = "assets/pcaps/"+ file_name
     return FileResponse(path=pcapsPath, filename=pcapsPath)
 
 # upload file pcap
