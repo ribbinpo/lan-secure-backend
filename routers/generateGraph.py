@@ -1,8 +1,8 @@
 from tkinter import image_names
 from fastapi import APIRouter, File, UploadFile
 import aiofiles
-from graphGenerator.GraphGenerator import construct_graph
-from graphGenerator.Visualization import visualize
+from graphGenerator_v2.GraphGenerator import construct_graph
+from graphGenerator_v2.Visualization import visualize
 from fastapi.responses import FileResponse, Response
 import os
 
@@ -15,7 +15,7 @@ router = APIRouter(
 
 @router.get('/run/{pcap_name}')
 async def running(pcap_name: str):
-    pcapsPath = "assets/pcaps/"+ pcap_name
+    pcapsPath = pcap_name
     status_graph, node_graph, edge_graph = construct_graph(pcapsPath)
     status_visual, pngPath = visualize(node_graph, edge_graph, pcapsPath)
     return {
