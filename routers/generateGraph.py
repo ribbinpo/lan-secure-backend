@@ -15,7 +15,8 @@ router = APIRouter(
 
 @router.get('/run/{pcap_name}')
 async def running(pcap_name: str):
-    pcapsPath = pcap_name
+    pcapsPath = pcap_name[:-5]
+    print('pcapPath', pcapsPath)
     nodeName = pcapsPath.split('_')[0]
     print(nodeName)
     if(nodeName not in os.listdir('assets/images/')):
