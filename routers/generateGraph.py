@@ -16,8 +16,17 @@ router = APIRouter(
 @router.get('/run/{pcap_name}')
 async def running(pcap_name: str):
     pcapsPath = pcap_name
-    status_graph, node_graph, edge_graph = construct_graph(pcapsPath)
-    status_visual, pngPath = visualize(node_graph, edge_graph, pcapsPath)
+    nodeName = pcapsPath.split('_')[0]
+    print(nodeName)
+    if(nodeName not in os.listdir('assets/images/')):
+        print('create new ', nodeName)
+        # os.mkdir('assets/pcaps/'+nodeName)
+        os.mkdir('assets/images/'+nodeName)
+        os.mkdir('assets/dots/'+nodeName)
+    else:
+        print('have already')
+    status_graph, node_graph, edge_graph = construct_graph(pcapsPath, nodeName)
+    status_visual, pngPath = visualize(node_graph, edge_graph, pcapsPath, nodeName)
     return {
         "Graph's status: ": status_graph,
         "Visual's status": status_visual    

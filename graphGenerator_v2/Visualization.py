@@ -5,18 +5,18 @@ prefixDots = 'assets/dots/'
 prefixImages = 'assets/images/'
 
 # Visualize ARP frames
-def visualize(node_dict, req_edge_dict, fileName):
-    status, dotfile = write_dotfile(node_dict, req_edge_dict, fileName)
+def visualize(node_dict, req_edge_dict, fileName, nodeFolder):
+    status, dotfile = write_dotfile(node_dict, req_edge_dict, fileName, nodeFolder)
     if status == ERROR:
         return ERROR, None
-    status, pngfile = generate_png_file(dotfile, fileName)
+    status, pngfile = generate_png_file(dotfile, fileName, nodeFolder)
     if status == ERROR:
         return ERROR, None
     return OK, pngfile
 
 # Write graph visualization info to dot file
-def write_dotfile(node_dict,req_edge_dict, fileName):
-    dotfile = prefixDots + fileName + '.dot'
+def write_dotfile(node_dict,req_edge_dict, fileName, nodeFolder):
+    dotfile = prefixDots + nodeFolder + '/' + fileName + '.dot'
     try:
         dotf = open(dotfile, 'w')
     except Exception as e:
@@ -56,8 +56,8 @@ def write_edge(dotf,vedge):
         '\t"{0}"->"{1}"[color={2}, style={3}];\n'.format(vedge.edge.get_src_ipstr(), vedge.edge.get_dst_ipstr(), vedge.color, GRAPH_LINE_TYPE))
 
 # Generate visulization png file
-def generate_png_file(dotfile, fileName):
-    pngfile = prefixImages + fileName + '.png'
+def generate_png_file(dotfile, fileName, nodeFolder):
+    pngfile = prefixImages + nodeFolder + '/' + fileName + '.png'
     command = "dot -Ksfdp " + dotfile + " -T png -o " + pngfile
     # print(command)
     try:
