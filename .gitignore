@@ -2,6 +2,6 @@ __pycache__/
 test.rar
 env/
 
-.png
-.pcap
-.dot
+*.png
+*.pcap
+*.dot
