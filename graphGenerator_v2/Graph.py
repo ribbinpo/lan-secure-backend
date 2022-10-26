@@ -1,6 +1,6 @@
 # Status
-OK = 0
-ERROR = 1
+OK = 1
+ERROR = 0
 
 # Configuration Graph for visualization
 GRAPH_BASIC_WIDTH = 1

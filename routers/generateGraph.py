@@ -6,6 +6,8 @@ from graphGenerator_v2.Visualization import visualize
 from fastapi.responses import FileResponse, Response
 import os
 
+# Download Pcaps, Dots, Images
+
 #APIRouter creates path operations for item module
 router = APIRouter(
     prefix="/connected-graph/v2",
@@ -29,8 +31,14 @@ async def running(pcap_name: str):
     status_graph, node_graph, edge_graph = construct_graph(pcapsPath, nodeName)
     status_visual, pngPath = visualize(node_graph, edge_graph, pcapsPath, nodeName)
     return {
-        "Graph's status: ": status_graph,
-        "Visual's status": status_visual    
+        "file": pcap_name,
+        "node": nodeName,
+        "file_name": pcapsPath,
+        "path_png": pngPath,
+        "status": {
+            "graph": bool(status_graph),
+            "visual": bool(status_visual),
+        },
     }
 
 @router.get('/download/{file_name}')
