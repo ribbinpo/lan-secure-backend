@@ -1,4 +1,5 @@
-from tkinter import image_names
+from contextlib import nullcontext
+# from tkinter import image_names
 from fastapi import APIRouter, File, UploadFile
 import aiofiles
 from graphGenerator_v2.GraphGenerator import construct_graph
@@ -15,31 +16,35 @@ router = APIRouter(
     responses={404: {"description": "Not found"}},
 )
 
-@router.get('/run/{pcap_name}')
-async def running(pcap_name: str):
-    pcapsPath = pcap_name[:-5]
-    print('pcapPath', pcapsPath)
-    nodeName = pcapsPath.split('_')[0]
-    print(nodeName)
-    if(nodeName not in os.listdir('assets/images/')):
-        print('create new ', nodeName)
+@router.get('/run/{pcap_path}')
+async def running(pcap_path: str):
+    pcap_name = pcap_path[:-5]
+    node_name = pcap_name.split('_')[0]
+    print('pcap: ', pcap_name)
+    print('node: ', node_name)
+    
+    if(node_name not in os.listdir('assets/images/')):
+        print('create new ', node_name)
         # os.mkdir('assets/pcaps/'+nodeName)
-        os.mkdir('assets/images/'+nodeName)
-        os.mkdir('assets/dots/'+nodeName)
-    else:
-        print('have already')
-    status_graph, node_graph, edge_graph = construct_graph(pcapsPath, nodeName)
-    status_visual, pngPath = visualize(node_graph, edge_graph, pcapsPath, nodeName)
-    return {
-        "file": pcap_name,
-        "node": nodeName,
-        "file_name": pcapsPath,
-        "path_png": pngPath,
-        "status": {
-            "graph": bool(status_graph),
-            "visual": bool(status_visual),
-        },
-    }
+        os.mkdir('assets/images/'+node_name)
+        os.mkdir('assets/dots/'+node_name)
+    image_path = pcap_name + '.png'
+    images_location = 'assets/images/' + node_name
+    if (image_path not in os.listdir(images_location)):
+        status_graph, node_graph, edge_graph = construct_graph(pcap_name, node_name)
+        status_visual, pngPath = visualize(node_graph, edge_graph, pcap_name, node_name)
+        print(pcap_name,' is generated successfully')
+        return {
+            "file": pcap_path,
+            "node": node_name,
+            "file_name": pcap_name,
+            "path_png": pngPath,
+            "status": {
+                "graph": bool(status_graph),
+                "visual": bool(status_visual),
+            },
+        }
+    return { "status": pcap_name + "\'s image and file has exist" }
 
 @router.get('/download/{file_name}')
 async def downloadImage(file_name: str):
@@ -60,7 +65,8 @@ async def create_upload_file(file: UploadFile = File(...)):
     # Cut .pcap file name
     status_visual, pngPath = visualize(node_graph, edge_graph, file.filename)
     return { "Result": status_visual }
-@router.get("/getname/")
+@router.get("/getAllNode/")
 async def get_file_name():
     file_list = os.listdir('assets/pcaps')
     return { "list": file_list }
+# @router.get("")

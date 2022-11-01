@@ -5,6 +5,7 @@ import socket
 # Generate graph: Vertices and Edges
 def construct_graph(pcapFile, nodeFolder):
     pcappath = 'assets/pcaps/' + nodeFolder + '/' +  pcapFile + '.pcap'
+    print(pcapFile)
     # Declare variables
     req_edge_dict = dict()
     rep_edge_dict = dict()
