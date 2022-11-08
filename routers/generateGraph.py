@@ -20,16 +20,19 @@ router = APIRouter(
 async def running(pcap_path: str):
     pcap_name = pcap_path[:-5]
     node_name = pcap_name.split('_')[0]
+    image_path = pcap_name + '.png'
+    images_location = 'assets/images/' + node_name
+    pcaps_location = 'assets/pcaps/' + node_name
     print('pcap: ', pcap_name)
     print('node: ', node_name)
     
+    if pcap_path not in os.listdir(pcaps_location):
+        return { "status": pcap_path + " is not Found"}
     if(node_name not in os.listdir('assets/images/')):
         print('create new ', node_name)
         # os.mkdir('assets/pcaps/'+nodeName)
         os.mkdir('assets/images/'+node_name)
         os.mkdir('assets/dots/'+node_name)
-    image_path = pcap_name + '.png'
-    images_location = 'assets/images/' + node_name
     if (image_path not in os.listdir(images_location)):
         status_graph, node_graph, edge_graph = construct_graph(pcap_name, node_name)
         status_visual, pngPath = visualize(node_graph, edge_graph, pcap_name, node_name)
