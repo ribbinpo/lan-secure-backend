@@ -42,6 +42,7 @@ async def create_upload_file(file: UploadFile = File(...)):
     # Cut .pcap file name
     status_visual, pngPath = visualize(node_graph, edge_graph, file.filename)
     return { "Result": status_visual }
+
 @router.get("/getname/")
 async def get_file_name():
     file_list = os.listdir('assets/pcaps')

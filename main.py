@@ -1,9 +1,8 @@
 import uvicorn
-from fastapi import FastAPI, File, UploadFile
+from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 import aiofiles
-# import shutil;
-from routers import graph, generateGraph
+from routers import graph, generateGraph, admin, node
 
 app = FastAPI()
 app.mount("/assets", StaticFiles(directory="assets"), name="assets")
@@ -12,8 +11,12 @@ app.mount("/assets", StaticFiles(directory="assets"), name="assets")
 async def root():
     return {"message": "Hello World"}
 
+# V1
 app.include_router(graph.router)
+# V2
 app.include_router(generateGraph.router)
+app.include_router(node.router)
+app.include_router(admin.router)
 
 # @app.post("/upload-file")
 # async def create_upload_file(file: UploadFile):
