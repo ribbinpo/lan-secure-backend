@@ -18,6 +18,6 @@ class Settings:
     DB_PORT : str = os.getenv("PORT_DB",5432) # default postgres port is 5432
     DB_DB : str = os.getenv("NAME_DB")
     # DB_URL : str = f"mysql://{DB_USER}:{DB_PASSWORD}@{DB_SERVER}:{DB_PORT}/{DB_DB}"
-    DB_URL : str = f"mysql+mysqlconnector://{DB_USER}:{DB_PASSWORD}@{DB_SERVER}:{DB_PORT}/{DB_DB}"
+    DB_URL : str = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_SERVER}:{DB_PORT}/{DB_DB}"
 
 settings = Settings()
