@@ -2,8 +2,8 @@
 # config = dotenv_values(".env")
 import os
 from dotenv import load_dotenv
-
 from pathlib import Path
+
 env_path = Path('.') / '.env'
 load_dotenv(dotenv_path=env_path)
 
@@ -21,3 +21,9 @@ class Settings:
     DB_URL : str = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_SERVER}:{DB_PORT}/{DB_DB}"
 
 settings = Settings()
+
+origins = [
+    "http://localhost:3000",
+    "http://localhost:3001",
+    os.getenv("FRONTEND_URL")
+]

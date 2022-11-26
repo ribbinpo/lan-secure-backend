@@ -4,13 +4,21 @@ from fastapi.staticfiles import StaticFiles
 import aiofiles
 from routers import graph, generateGraph, admin, node
 
+from core.config import origins
+from fastapi.middleware.cors import CORSMiddleware
+
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
 app.mount("/assets", StaticFiles(directory="assets"), name="assets")
-
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
-
 # V1
 app.include_router(graph.router)
 # V2
