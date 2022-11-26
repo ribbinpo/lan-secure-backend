@@ -5,3 +5,5 @@ env/
 *.png
 *.pcap
 *.dot
+
+.env
