@@ -23,10 +23,10 @@ async def running(pcap_name: str):
         "Visual's status": status_visual    
     }
 
-@router.get('/uploadImage/{image_name}')
-async def downloadImage(image_name: str):
-    pcapsPath = "assets/pcaps/"+ image_name
-    return FileResponse(path=pcapsPath, filename=pcapsPath)
+@router.get('/download/{type}/{node}/{image_name}')
+async def downloadImage(type: str, node: str, image_name: str):
+    pcapsPath = "assets/"+type+"/"+ node +"/"+ image_name
+    return FileResponse(path=pcapsPath, filename=image_name)
 
 # upload file pcap
 @router.post("/uploadfile/")
