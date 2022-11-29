@@ -7,3 +7,7 @@ env/
 *.dot
 
 .env
+
+assets/dots/
+assets/images/
+assets/pcaps/
