@@ -25,5 +25,7 @@ settings = Settings()
 origins = [
     "http://localhost:3000",
     "http://localhost:3001",
-    os.getenv("FRONTEND_URL")
+    os.getenv("FRONTEND_URL"),
+    "https://symphonious-madeleine-aa3f5d.netlify.app"
+    "*"
 ]
