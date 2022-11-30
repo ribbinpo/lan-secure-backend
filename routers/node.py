@@ -30,18 +30,18 @@ def get_file_modify_date(path_file):
   m_ti = time.ctime(ti_m)
   print(f"The file located at the path {path_file} was created at {c_ti} and was " f"last modified at {m_ti}")
   return c_ti
-def compareFileUpdate(previousPath, currentPath):
+def compareFileUpdate(previousPath: str, currentPath: str):
   previousFile = get_file_modify_date(previousPath)
   currentFile = get_file_modify_date(currentPath)
   if (previousFile > currentFile):
-    return previousPath
+    return str(previousPath)
   elif (previousFile < currentFile):
-    return currentPath
-  return
-def compareFileUpdateList(lists, path):
+    return str(currentPath)
+  return str(previousPath)
+def compareFileUpdateList(lists: list[str], path: str):
   newest = ''
   if (len(lists) == 1):
-    return path+'/'+lists[0]
+    return str(path+'/'+lists[0])
   elif (len(lists) > 1):
     for i in range(len(lists)):
       current = path+'/'+lists[i]
@@ -49,7 +49,7 @@ def compareFileUpdateList(lists, path):
         newest = current
         continue
       newest = compareFileUpdate(newest, current)
-  return newest
+  return str(newest)
 
 # list_all images, pcap, dot file
 @router.get('/getAll')
@@ -111,7 +111,7 @@ def getImageLastInEachNode():
       print(node.idnode)
       # For Image Path
       files = list_file('assets/images/'+node.name)
-      path = 'assets/images/'+node.name
+      path = str('assets/images/'+node.name)
       lastestImage = compareFileUpdateList(files, path)
       lastestImages.append({
         "owner": node.owner,
