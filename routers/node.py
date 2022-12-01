@@ -22,6 +22,13 @@ router = APIRouter(
 )
 
 def check_file(folder):
+  print('folder: ', folder)
+  if ((folder not in os.listdir('assets/pcaps/'))):
+    os.mkdir(os.path.join('assets/pcaps/',folder))
+  if ((folder not in os.listdir('assets/images/'))):
+    os.mkdir(os.path.join('assets/images/',folder))
+  if ((folder not in os.listdir('assets/dots/'))):
+    os.mkdir(os.path.join('assets/dots/',folder))
   return (folder in os.listdir('assets/pcaps/')) and (folder in os.listdir('assets/images/')) and (folder in os.listdir('assets/dots/'))
 def list_file(path):
   return os.listdir(path)
@@ -69,6 +76,17 @@ def getAll(db: Session = Depends(get_db)):
         'pcaps': list_file('assets/pcaps/'+node.name),
         'images': list_file('assets/images/'+node.name),
         'dots': list_file('assets/dots/'+node.name),
+      }
+      nodes_detail.append(node_detail)
+    else:
+      node_detail = {
+        "owner": node.owner,
+        "name": node.name,
+        "idnode": node.idnode,
+        "detail": node.detail,
+        'pcaps': [],
+        'images': [],
+        'dots': [],
       }
       nodes_detail.append(node_detail)
   return nodes_detail
