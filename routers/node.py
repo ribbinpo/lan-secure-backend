@@ -1,4 +1,5 @@
 import os
+from os.path import isfile
 import time
 from http.client import HTTPException
 from sqlalchemy.orm import Session
@@ -20,6 +21,8 @@ router = APIRouter(
     responses={404: {"description": "Not found"}},
 )
 
+def check_file(folder):
+  return (folder in os.listdir('assets/pcaps/')) and (folder in os.listdir('assets/images/')) and (folder in os.listdir('assets/dots/'))
 def list_file(path):
   return os.listdir(path)
 def get_file_modify_date(path_file):
@@ -57,16 +60,17 @@ def getAll(db: Session = Depends(get_db)):
   nodes = db.query(models.Node).all()
   nodes_detail = []
   for node in nodes:
-    node_detail = {
-      "owner": node.owner,
-      "name": node.name,
-      "idnode": node.idnode,
-      "detail": node.detail,
-      'pcaps': list_file('assets/pcaps/'+node.name),
-      'images': list_file('assets/images/'+node.name),
-      'dots': list_file('assets/dots/'+node.name),
-    }
-    nodes_detail.append(node_detail)
+    if (check_file(node.name)):
+      node_detail = {
+        "owner": node.owner,
+        "name": node.name,
+        "idnode": node.idnode,
+        "detail": node.detail,
+        'pcaps': list_file('assets/pcaps/'+node.name),
+        'images': list_file('assets/images/'+node.name),
+        'dots': list_file('assets/dots/'+node.name),
+      }
+      nodes_detail.append(node_detail)
   return nodes_detail
 
 @router.post('/create')
