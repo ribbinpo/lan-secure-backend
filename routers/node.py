@@ -114,14 +114,15 @@ def getImageLastInEachNode():
     for node in nodes:
       print(node.idnode)
       # For Image Path
-      files = list_file('assets/images/'+node.name)
-      path = str('assets/images/'+node.name)
-      lastestImage = compareFileUpdateList(files, path)
-      lastestImages.append({
-        "owner": node.owner,
-        "name": node.name,
-        "idnode": node.idnode,
-        "detail": node.detail,
-        'image': lastestImage
-      })
+      if (check_file(node.name)):
+        files = list_file('assets/images/'+node.name)
+        path = str('assets/images/'+node.name)
+        lastestImage = compareFileUpdateList(files, path)
+        lastestImages.append({
+          "owner": node.owner,
+          "name": node.name,
+          "idnode": node.idnode,
+          "detail": node.detail,
+          'image': lastestImage
+        })
   return lastestImages
